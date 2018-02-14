@@ -1,22 +1,24 @@
-
 const St = imports.gi.St
 const Clutter = imports.gi.Clutter
 
+const Lang = imports.lang
 const Main = imports.ui.main
+const Mainloop = imports.mainloop
 const Tweener = imports.ui.tweener
 
-let text, button, metadata;
+let loopId = null
+let text, button, metadata, counter
 
 function _hideHello() {
-Main.uiGroup.remove_actor(text);
-text = null;
+  Main.uiGroup.remove_actor(text)
+  text = null
 }
 
-function _showHello() {
+function _showHello(zzz) {
   if (!text) {
     text = new St.Label({
-      style_class: 'helloworld-label',
-      text: 'wowzzzz' + JSON.stringify(metadata)
+      text: zzz + ' zzz?',
+      style_class: 'helloworld-label'
     })
 
     Main.uiGroup.add_actor(text)
@@ -51,8 +53,7 @@ function init(meta) {
   })
 
   let counter = new St.Label({
-    y_align: Clutter.ActorAlign.CENTER,
-    text: '31.5K'
+    y_align: Clutter.ActorAlign.CENTER
   })
 
   let icon = new St.Icon({
@@ -70,8 +71,17 @@ function init(meta) {
 
 function enable() {
   Main.panel._rightBox.insert_child_at_index(button, 0)
+  loopId = Mainloop.timeout_add_seconds(3, onRefresh)
+}
+
+function onRefresh () {
+  _showHello(Math.random())
+  counter.set_text(Math.floor(Math.random() * 1000) + 'K')
+
+  return true
 }
 
 function disable() {
   Main.panel._rightBox.remove_child(button)
+  Mainloop.source_remove(loopId)
 }
