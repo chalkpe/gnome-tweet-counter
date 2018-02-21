@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist>
+  <schema id="org.gnome.shell.extensions.tweetcounter" path="/org/gnome/shell/extensions/tweetcounter/">
+    <key name="username" type="s">
+      <default>""</default>
+      <summary>Username</summary>
+      <description>Your Twitter username</description>
+    </key>
+  </schema>
+</schemalist>

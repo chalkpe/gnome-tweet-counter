@@ -3,5 +3,6 @@
   "name": "Tweet Counter",
   "description": "Indicates your tweet count in status area",
   "url": "https://github.com/ChalkPE/gnome-tweet-counter",
+  "settings-schema": "org.gnome.shell.extensions.tweetcounter",
   "shell-version": ["3.26.2"]
 }

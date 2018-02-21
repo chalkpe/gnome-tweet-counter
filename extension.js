@@ -16,6 +16,7 @@ const PopupMenu = imports.ui.popupMenu
 
 let loopId = null
 let counter = null
+// let schema = null
 
 const TweetCounter = Lang.Class({
   Name: 'TweetCounter',
@@ -51,10 +52,12 @@ const TweetCounter = Lang.Class({
 function init (meta) {
   const Theme = Gtk.IconTheme.get_default()
   Theme.append_search_path(meta.path + '/icons')
-  if (counter === null) counter = new TweetCounter()
+
+  // schema = Convenience.getSettings()
 }
 
 function enable () {
+  if (counter === null) counter = new TweetCounter()
   Main.panel.addToStatusArea('tweet-counter', counter, 0)
   loopId = Mainloop.timeout_add_seconds(1, () => counter._refresh())
 }
