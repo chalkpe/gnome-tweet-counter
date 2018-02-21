@@ -1,0 +1,29 @@
+{
+  "name": "gnome-tweet-counter",
+  "version": "1.0.0",
+  "description": "Indicates your tweet count in status area",
+  "main": "extension.js",
+  "scripts": {
+    "test": "standard --verbose | snazzy"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ChalkPE/gnome-tweet-counter.git"
+  },
+  "keywords": [
+    "gnome",
+    "shell",
+    "extension",
+    "twitter"
+  ],
+  "author": "ChalkPE",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ChalkPE/gnome-tweet-counter/issues"
+  },
+  "homepage": "https://github.com/ChalkPE/gnome-tweet-counter#readme",
+  "devDependencies": {
+    "snazzy": "^7.0.0",
+    "standard": "^11.0.0"
+  }
+}

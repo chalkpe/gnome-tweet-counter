@@ -1,6 +1,7 @@
 {
-  "name": "Tweet Counter",
-  "shell-version": ["3.20.4"],
   "uuid": "tweetcounter@chalk.chalk.pe",
-  "description": "Indicates your tweet count in status area."
+  "name": "Tweet Counter",
+  "description": "Indicates your tweet count in status area",
+  "url": "https://github.com/ChalkPE/gnome-tweet-counter",
+  "shell-version": ["3.26.2"]
 }
