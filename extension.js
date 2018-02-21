@@ -1,5 +1,5 @@
-/* global imports */
-/* eslint no-unused-vars: ["error", { "varsIgnorePattern": "^(init|enable|disable)$" }] */
+/* eslint no-unused-vars:
+  ["error", { "varsIgnorePattern": "^(init|enable|disable)$" }] */
 
 const Lang = imports.lang
 const Mainloop = imports.mainloop
@@ -7,6 +7,7 @@ const Mainloop = imports.mainloop
 // gi
 const St = imports.gi.St
 const Gtk = imports.gi.Gtk
+const Soup = imports.gi.Soup
 const Clutter = imports.gi.Clutter
 
 // ui
@@ -14,9 +15,18 @@ const Main = imports.ui.main
 const PanelMenu = imports.ui.panelMenu
 const PopupMenu = imports.ui.popupMenu
 
+// pref
+const Util = imports.misc.util
+const ExtensionUtils = imports.misc.extensionUtils
+const Me = ExtensionUtils.getCurrentExtension()
+
+let schema = null
 let loopId = null
 let counter = null
-// let schema = null
+let session = new Soup.SessionAsync()
+
+const url = 'https://twitter.com/'
+const regex = /ProfileNav-item--tweets[\s\S]*?data-count=(\d+)[\s\S]*?data-is-compact="(.*?)"[\s\S]*?>[\s\S]*?(.*)[\s\S]*?<\/span>/g
 
 const TweetCounter = Lang.Class({
   Name: 'TweetCounter',
@@ -24,6 +34,7 @@ const TweetCounter = Lang.Class({
 
   _init: function () {
     this.parent(null, 'TweetCounter')
+    const id = '@' + schema.get_string('username')
 
     this.box = new St.BoxLayout()
     this.actor.add_actor(this.box)
@@ -38,13 +49,22 @@ const TweetCounter = Lang.Class({
       y_align: Clutter.ActorAlign.CENTER
     }))
 
-    this.menuItem = new PopupMenu.PopupMenuItem('Tweet Counter', {})
+    this.menuItem = new PopupMenu.PopupMenuItem('Twitter Settings', {})
+    this.menuItem.connect('activate', () => Util.spawn(['gnome-shell-extension-prefs', Me.metadata.uuid]))
+
+    this.menu.addMenuItem(new PopupMenu.PopupMenuItem(id, {}))
     this.menu.addMenuItem(this.menuItem)
   },
 
-  // TODO: Update *real* information
   _refresh: function () {
-    this.label.set_text(Math.floor(Math.random() * 1000) + 'K')
+    const username = schema.get_string('username')
+    const req = Soup.Message.new('GET', url + username)
+
+    session.queue_message(req, () => {
+      const m = regex.exec(req.response_body.data)
+      if (m !== null) this.label.set_text(m[1])
+    })
+
     return true
   }
 })
@@ -52,14 +72,13 @@ const TweetCounter = Lang.Class({
 function init (meta) {
   const Theme = Gtk.IconTheme.get_default()
   Theme.append_search_path(meta.path + '/icons')
-
-  // schema = Convenience.getSettings()
+  schema = Me.imports.convenience.getSettings()
 }
 
 function enable () {
   if (counter === null) counter = new TweetCounter()
   Main.panel.addToStatusArea('tweet-counter', counter, 0)
-  loopId = Mainloop.timeout_add_seconds(1, () => counter._refresh())
+  loopId = Mainloop.timeout_add_seconds(3, () => counter._refresh())
 }
 
 function disable () {

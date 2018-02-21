@@ -1,5 +1,5 @@
-/* global imports */
-/* eslint no-unused-vars: ["error", { "varsIgnorePattern": "^(init|buildPrefsWidget)$" }] */
+/* eslint no-unused-vars:
+  ["error", { "varsIgnorePattern": "^(init|buildPrefsWidget)$" }] */
 
 const Gtk = imports.gi.Gtk
 const GdkPixbuf = imports.gi.GdkPixbuf

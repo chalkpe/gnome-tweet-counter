@@ -25,5 +25,9 @@
   "devDependencies": {
     "snazzy": "^7.0.0",
     "standard": "^11.0.0"
+  },
+  "standard": {
+    "globals": ["imports"],
+    "ignore": ["convenience.js"]
   }
 }
