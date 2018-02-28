@@ -5,6 +5,7 @@
   "main": "extension.js",
   "scripts": {
     "test": "standard --verbose | snazzy",
+    "compile": "glib-compile-schemas ./schemas/",
     "postinstall": "mkdir -p $HOME/.local/share/gnome-shell/extensions && ln -s $PWD $HOME/.local/share/gnome-shell/extensions/tweetcounter@chalk.chalk.pe && gnome-shell-extension-tool -e tweetcounter@chalk.chalk.pe"
   },
   "repository": {

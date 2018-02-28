@@ -6,5 +6,11 @@
       <summary>Username</summary>
       <description>Your Twitter username</description>
     </key>
+
+    <key name="compact" type="b">
+      <default>false</default>
+      <summary>Compact count</summary>
+      <description>Abbreviate large number. (81800 -> 81.8K)</description>
+    </key>
   </schema>
 </schemalist>
